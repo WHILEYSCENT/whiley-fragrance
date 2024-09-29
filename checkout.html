@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Gris Dior Esprit de Parfum</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            padding: 20px;
+            background-color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+        .container {
+            padding: 20px;
+        }
+        .checkout-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .checkout-total {
+            text-align: right;
+            padding: 20px 0;
+            font-size: 1.2em;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Checkout</h1>
+</header>
+
+<div class="container">
+    <div id="checkout-items"></div>
+    <div class="checkout-total">Total: Rp <span id="checkout-total">0</span></div>
+    <button class="button" onclick="payNow()">Bayar Sekarang</button>
+</div>
+
+<script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let total = 0;
+
+    // Tampilkan item di keranjang
+    function displayCartItems() {
+        const checkoutItemsDiv = document.getElementById('checkout-items');
+        checkoutItemsDiv.innerHTML = ''; // Kosongkan isi sebelumnya
+
+        cart.forEach(item => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('checkout-item');
+            itemDiv.innerHTML = <span>${item.name}</span><span>Rp ${item.price}</span>;
+            checkoutItemsDiv.appendChild(itemDiv);
+
+            // Tambah ke total
+            total += item.price;
+        });
+
+        document.getElementById('checkout-total').innerText = total;
+    }
+
+    // Fungsi untuk simulasi pembayaran
+    function payNow() {
+        alert('Pembayaran berhasil! Total yang dibayar: Rp ' + total);
+        localStorage.removeItem('cart'); // Kosongkan keranjang setelah pembayaran
+        window.location.href = 'index.html'; // Kembali ke halaman utama
+    }
+
+    // Tampilkan item keranjang saat halaman dimuat
+    window.onload = displayCartItems;
+</script>
+
+</body>
+</html>
